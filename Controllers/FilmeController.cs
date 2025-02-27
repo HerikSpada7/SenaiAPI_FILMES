@@ -60,7 +60,7 @@ namespace api_filmes_senai.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
             try
@@ -68,9 +68,9 @@ namespace api_filmes_senai.Controllers
                 _filmeRepository.Deletar(id);
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception error)
             {
-                throw;
+                return BadRequest(error.Message);
             }
         }
 
@@ -82,6 +82,21 @@ namespace api_filmes_senai.Controllers
             {
                 _filmeRepository.Atualizar(id, novoFilme);
                 return NoContent();    
+            }
+            catch (Exception error)
+            {
+                return BadRequest(error.Message);
+            }
+        }
+
+
+        [HttpGet("ListarPorGenero/{id}")]
+        public IActionResult GetByGenero(Guid id)
+        {
+            try
+            {
+                List<Filme> listaDeFilmePorGenero = _filmeRepository.ListarPorGenero(id);
+                return Ok(listaDeFilmePorGenero);
             }
             catch (Exception error)
             {

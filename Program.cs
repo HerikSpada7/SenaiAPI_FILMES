@@ -7,12 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Adiciona o contexto do banco de dados (exemplo com SQL Server)
 builder.Services.AddDbContext<Filmes_Context>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 // Adicionar o  e a interface ao container de injeção de dependência
 builder.Services.AddScoped<IGeneroRepository, GeneroRepository>();
 builder.Services.AddScoped<IFilmeRepository, FilmeRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 //Adicionar o serviço de Controllers
 builder.Services.AddControllers();

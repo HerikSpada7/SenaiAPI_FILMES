@@ -53,9 +53,17 @@ namespace api_filmes_senai.Repositories
 
         public void Cadastrar(Filme novoFilme)
         {
-            _context.Filme.Add(novoFilme);
+            try
+            {
+                _context.Filme.Add(novoFilme);
 
-            _context.SaveChanges();
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+           
         }
 
         public void Deletar(Guid id)
@@ -123,6 +131,11 @@ namespace api_filmes_senai.Repositories
             }
 
         }
+
+
+
+
+
     }
 }
 

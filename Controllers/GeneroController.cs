@@ -18,7 +18,6 @@ namespace api_filmes_senai.Controllers
         }
 
         [HttpGet]
-
         public IActionResult Get()
         {
             try

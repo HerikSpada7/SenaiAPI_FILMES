@@ -1,5 +1,8 @@
-﻿using api_filmes_senai.Domains.StringLenght;
+﻿using api_filmes_senai.Domains;
+using api_filmes_senai.Domains.StringLenght;
 using api_filmes_senai.Interfaces;
+using api_filmes_senai.Repositories;
+using api_filmes_senai.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +21,6 @@ namespace api_filmes_senai.Controllers
         }
 
 
-
         [HttpPost]
         public IActionResult Post(Usuario usuario)
         {
@@ -32,6 +34,22 @@ namespace api_filmes_senai.Controllers
             {
                 return BadRequest(error.Message);
             }
+        }
+
+
+        [HttpGet("BuscarPorId/{id}")]
+        public IActionResult GetById(Guid id)
+        {
+            try
+            {
+                Usuario usuarioBuscado = _usuarioRepository.BuscarPorId(id);
+                return Ok(usuarioBuscado);
+            }
+            catch (Exception error)
+            {
+                return BadRequest(error.Message);
+            }
+
         }
     }
 }

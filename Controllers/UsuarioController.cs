@@ -20,7 +20,9 @@ namespace api_filmes_senai.Controllers
             _usuarioRepository = usuarioRepository;
         }
 
-
+        /// <summary>
+        /// Endpoint para Cadastrar o Usuario
+        /// </summary>
         [HttpPost]
         public IActionResult Post(Usuario usuario)
         {
@@ -36,7 +38,9 @@ namespace api_filmes_senai.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Endpoint para Buscar Usuario por Id
+        /// </summary>
         [HttpGet("BuscarPorId/{id}")]
         public IActionResult GetById(Guid id)
         {

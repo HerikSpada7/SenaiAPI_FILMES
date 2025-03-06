@@ -21,6 +21,9 @@ namespace api_filmes_senai.Controllers
             _usuarioRepository = usuarioRepository;
         }
 
+        /// <summary>
+        /// Endpoint para Buscar um Login pelo seu id
+        /// </summary>
         [HttpPost]
         public IActionResult Login(LoginDTO loginDTO)
         {

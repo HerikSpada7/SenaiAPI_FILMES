@@ -3,6 +3,7 @@ using api_filmes_senai.Domains.StringLenght;
 using api_filmes_senai.Interfaces;
 using api_filmes_senai.Repositories;
 using api_filmes_senai.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,7 @@ namespace api_filmes_senai.Controllers
         /// <summary>
         /// Endpoint para Cadastrar o Usuario
         /// </summary>
+        [Authorize]
         [HttpPost]
         public IActionResult Post(Usuario usuario)
         {

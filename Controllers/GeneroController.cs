@@ -1,7 +1,6 @@
 ﻿using api_filmes_senai.Domains;
 using api_filmes_senai.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api_filmes_senai.Controllers
@@ -12,15 +11,15 @@ namespace api_filmes_senai.Controllers
     public class GeneroController : ControllerBase
     {
         private readonly IGeneroRepository _generoRepository;
-
         public GeneroController(IGeneroRepository generoRepository)
         {
             _generoRepository = generoRepository;
         }
 
         /// <summary>
-        /// Endpoint para Listar Gêneros
+        /// Endpoint para listar todos os gêneros
         /// </summary>
+        /// <returns>Lista de Gêneros</returns>
         [HttpGet]
         public IActionResult Get()
         {
@@ -28,59 +27,66 @@ namespace api_filmes_senai.Controllers
             {
                 return Ok(_generoRepository.Listar());
             }
-            catch (Exception error)
+            catch (Exception e)
             {
-                return BadRequest(error.Message);
+                return BadRequest(e.Message);
             }
         }
 
         /// <summary>
-        /// Endpoint para cadastrar um Gênero
+        /// Endpoint para cadastrar um novo gênero
         /// </summary>
-        [Authorize]
+        /// <param name="novoGenero">Gênero a ser cadastrado</param>
+        /// <returns>Status code 201</returns>
+        // [Authorize]
         [HttpPost]
         public IActionResult Post(Genero novoGenero)
         {
             try
             {
                 _generoRepository.Cadastrar(novoGenero);
+
                 return Created();
             }
-            catch (Exception error)
+            catch (Exception e)
             {
-                return BadRequest(error.Message);
+                return BadRequest(e.Message);
             }
         }
 
         /// <summary>
-        /// Endpoint para buscar um Gênero pelo seu Id
+        /// Endpoint para buscar um gênero pelo seu id
         /// </summary>
+        /// <param name="id">Id do Gênero buscado</param>
+        /// <returns>Gênero Buscado</returns>
         [HttpGet("BuscarPorId/{id}")]
         public IActionResult GetById(Guid id)
         {
             try
             {
-                Genero generoBuscado = _generoRepository.BuscarPorID(id);
+                Genero generoBuscado = _generoRepository.BuscarPorId(id);
+
                 return Ok(generoBuscado);
             }
-            catch (Exception error)
+            catch (Exception e)
             {
-                return BadRequest(error.Message);
+                return BadRequest(e.Message);
             }
-
         }
 
-
         /// <summary>
-        /// Endpoint para Deletar o Gênero
+        /// Endpoint para excluir um gênero
         /// </summary>
-        [Authorize]
+        /// <param name="id">Id do Gênero a ser excluído</param>
+        /// <returns>Status Code 204</returns>
+        // [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
             try
             {
                 _generoRepository.Deletar(id);
+
                 return NoContent();
             }
             catch (Exception)
@@ -89,25 +95,26 @@ namespace api_filmes_senai.Controllers
             }
         }
 
-
-
         /// <summary>
-        /// Endpoint para Atualizar o Gênero
+        /// Endpoint para atualizar um gênero
         /// </summary>
-        [Authorize]
+        /// <param name="id">Id do gênero a ser atualizado</param>
+        /// <param name="genero">Objeto com os dados atualizados</param>
+        /// <returns>Status code 201</returns>
+        // [Authorize]
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, Genero genero)
         {
             try
             {
                 _generoRepository.Atualizar(id, genero);
-                return NoContent();
+
+                return NoContent() ;
             }
-            catch (Exception error)
+            catch (Exception e)
             {
-                return BadRequest(error.Message);
+                return BadRequest(e.Message);
             }
         }
     }
 }
-

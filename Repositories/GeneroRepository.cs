@@ -1,29 +1,27 @@
-﻿using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
-using api_filmes_senai.Context;
+﻿using api_filmes_senai.Context;
 using api_filmes_senai.Domains;
 using api_filmes_senai.Interfaces;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace api_filmes_senai.Repositories
 {
     /// <summary>
     /// Classe que vai implementar a interface IGeneroRepository
-    /// Ou seja, vamos imple,emtar os métodos, toda a lógica dos métodos
+    /// Ou seja, vamos implementar os métodos, toda a lógica dos métodos
     /// </summary>
     public class GeneroRepository : IGeneroRepository
     {
         /// <summary>
-        /// Variável privada e somente leitura que "Guarda" os dados do contexto
+        /// Variável privada e somente leitura
+        /// que "guarda" os dados do contexto
         /// </summary>
         private readonly Filmes_Context _context;
 
         /// <summary>
         /// Construtor do repositório
-        /// Aqui, toda vez que o construtor for chamado, os dados do contexto estarão disponíveis
+        /// Aqui, toda vez que o construtor for chamado,
+        /// os dados do contexto estarão disponíveis
         /// </summary>
-        /// <param name="contexto">Dados do Contexto</param>
-
+        /// <param name="contexto">Dados do contexto</param>
         public GeneroRepository(Filmes_Context contexto)
         {
             _context = contexto;
@@ -33,7 +31,7 @@ namespace api_filmes_senai.Repositories
         {
             try
             {
-                Genero generoBuscado = _context.Genero.Find(id)!;
+                Genero generoBuscado = _context.Generos.Find(id)!;
 
                 if (generoBuscado != null)
                 {
@@ -44,17 +42,18 @@ namespace api_filmes_senai.Repositories
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-        public Genero BuscarPorID(Guid id)
+        public Genero BuscarPorId(Guid id)
         {
             try
             {
-                Genero generoBuscado = _context.Genero.Find(id)!;
+                Genero generoBuscado = _context.Generos.Find(id)!;
+
                 return generoBuscado;
+
             }
             catch (Exception)
             {
@@ -65,14 +64,15 @@ namespace api_filmes_senai.Repositories
         /// <summary>
         /// Método para cadastrar um novo gênero
         /// </summary>
-        /// <param name="novoGenero">Objeto gênero a ser cadastrado</param>
+        /// <param name="novoGenero">objeto gênero a ser cadastrado</param>
         public void Cadastrar(Genero novoGenero)
         {
             try
             {
                 //Adiciona um novo gênero na tabela Generos(BD)
-                _context.Genero.Add(novoGenero);
+                _context.Generos.Add(novoGenero);
 
+                //Após o cadastro, salva as alterações(BD)
                 _context.SaveChanges();
             }
             catch (Exception)
@@ -81,24 +81,24 @@ namespace api_filmes_senai.Repositories
             }
         }
 
-        //ctrl + k + c: atalho para comentar o código
-        //ctrl + k + d: atalho para arrumar o código
+        //ctrl + k + c : atalho para comentar código
+        //ctrl + k + d : atalho para identar o código
 
         public void Deletar(Guid id)
         {
             try
             {
-                Genero generoBuscado = _context.Genero.Find(id)!;
+                Genero generoBuscado = _context.Generos.Find(id)!;
 
                 if (generoBuscado != null)
                 {
-                    _context.Genero.Remove(generoBuscado);
+                    _context.Generos.Remove(generoBuscado);
                 }
+
                 _context.SaveChanges();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -107,15 +107,14 @@ namespace api_filmes_senai.Repositories
         {
             try
             {
-                List<Genero> listaGeneros = _context.Genero.ToList();
-                return listaGeneros;
+                List<Genero> listaGeneros = _context.Generos.ToList();
 
+                return listaGeneros;
             }
             catch (Exception)
             {
                 throw;
             }
-
         }
     }
 }

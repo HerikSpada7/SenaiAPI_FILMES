@@ -8,18 +8,17 @@ namespace api_filmes_senai.Repositories
     public class FilmeRepository : IFilmeRepository
     {
         private readonly Filmes_Context _context;
+
         public FilmeRepository(Filmes_Context context)
         {
             _context = context;
         }
 
-
-
         public void Atualizar(Guid id, Filme filme)
         {
             try
             {
-                Filme filmeBuscado = _context.Filme.Find(id)!;
+                Filme filmeBuscado = _context.Filmes.Find(id)!;
 
                 if (filmeBuscado != null)
                 {
@@ -28,11 +27,9 @@ namespace api_filmes_senai.Repositories
                 }
 
                 _context.SaveChanges();
-
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -41,9 +38,9 @@ namespace api_filmes_senai.Repositories
         {
             try
             {
-                Filme filmeBuscado = _context.Filme.Find(id)!;
-                return filmeBuscado;
+                Filme filmeBuscado = _context.Filmes.Find(id)!;
 
+                return filmeBuscado;
             }
             catch (Exception)
             {
@@ -55,7 +52,7 @@ namespace api_filmes_senai.Repositories
         {
             try
             {
-                _context.Filme.Add(novoFilme);
+                _context.Filmes.Add(novoFilme);
 
                 _context.SaveChanges();
             }
@@ -63,25 +60,23 @@ namespace api_filmes_senai.Repositories
             {
                 throw;
             }
-           
         }
 
         public void Deletar(Guid id)
         {
             try
             {
-                Filme filmeBuscado = _context.Filme.Find(id)!;
+                Filme filmeBuscado = _context.Filmes.Find(id)!;
 
                 if (filmeBuscado != null)
                 {
-                    _context.Filme.Remove(filmeBuscado);
+                    _context.Filmes.Remove(filmeBuscado);
                 }
 
                 _context.SaveChanges();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -90,22 +85,26 @@ namespace api_filmes_senai.Repositories
         {
             try
             {
-                List<Filme> listaDeFilmes = _context.Filme.Include(g => g.Genero)
-                .Select(f => new Filme
-                {
-                    IdFilme = f.IdFilme,
-                    Titulo = f.Titulo,
-
-                    Genero = new Genero
+                List<Filme> listaDeFilmes = _context.Filmes
+                    //inclui os dados de genero na listagem de filme
+                    .Include(g => g.Genero)
+                    //Seleciona o que quer trazer na requisição
+                    .Select(f => new Filme
                     {
-                        IdGenero = f.IdGenero,
-                        Nome = f.Genero!.Nome
-                    }
-                })
-                .ToList();
+                        //dados de filme
+                        IdFilme = f.IdFilme,
+                        Titulo = f.Titulo,
+                        
+                        //dados de genero
+                        Genero = new Genero
+                        {
+                            IdGenero = f.IdGenero,
+                            Nome = f.Genero!.Nome
+                        }
+                    })
+                    .ToList();
 
                 return listaDeFilmes;
-
             }
             catch (Exception)
             {
@@ -117,25 +116,19 @@ namespace api_filmes_senai.Repositories
         {
             try
             {
-                List<Filme> listaDeFilmes = _context.Filme
-                    .Include(g => g.Genero)
-                    .Where(f => f.IdGenero == idGenero)
-                    .ToList();
+                List<Filme> listaDeFilmes = _context.Filmes                
+                        .Include(g => g.Genero)  
+                        .Where(f => f.IdGenero == idGenero)
+                        .ToList();
 
                 return listaDeFilmes;
 
             }
             catch (Exception)
             {
+
                 throw;
             }
-
-        }
-
-
-
-
-
+        } 
     }
 }
-

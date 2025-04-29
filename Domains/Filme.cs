@@ -14,11 +14,14 @@ namespace api_filmes_senai.Domains
         public string? Titulo { get; set; }
 
         /// <summary>
-        /// Refêrencia da tabela Gênero
+        /// Referência da tabela Genero
         /// </summary>
         public Guid IdGenero { get; set; }
 
         [ForeignKey("IdGenero")]
         public Genero? Genero { get; set; }
+
+
+
     }
 }

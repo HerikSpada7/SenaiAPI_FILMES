@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api_filmes_senai.Domains
 {
+    [Table("Genero")]
     public class Genero
     {
         [Key]

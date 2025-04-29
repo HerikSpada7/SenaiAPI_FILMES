@@ -4,17 +4,18 @@ namespace api_filmes_senai.Interfaces
 {
     /// <summary>
     /// Interface para Genero : Contrato
-    /// Toda Classe que herdar(implementar) essa interface, deverá implementar todos os métodos definidos aqui dentro
+    /// Toda classe que herdar(implementar) essa interface,
+    /// deverá implementar todos os métodos definidos aqui dentro
     /// </summary>
     public interface IGeneroRepository
     {
-        //CRUD: Métodos
-        //C: Create: Cadastrar um novo Objeto
-        //R: Read: Listar todos os objetos
-        //U: Update: Alterar um objeto
-        //D: Delete: Deleto ou excluo um objeto
+        //CRUD : Métodos
+        //C : Create : Cadastrar um novo Objeto
+        //R : Read : Listar todos os objetos
+        //U : Update : Alterar um objeto
+        //D : Delete : Deleto ou excluo um objeto
 
-        // Método: TipoDeRetorno NomeDoMetodo(Argumentos)
+        // Método = TipoDeRetorno NomeDoMetodo(Argumentos)
 
         void Cadastrar(Genero novoGenero);
 
@@ -24,7 +25,6 @@ namespace api_filmes_senai.Interfaces
 
         void Deletar(Guid id);
 
-        Genero BuscarPorID(Guid id);
-
+        Genero BuscarPorId(Guid id);
     }
 }

@@ -1,8 +1,6 @@
 ﻿using api_filmes_senai.Domains;
-using api_filmes_senai.Domains.StringLenght;
+using api_filmes_senai.DTO;
 using api_filmes_senai.Interfaces;
-using api_filmes_senai.Repositories;
-using api_filmes_senai.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +9,7 @@ namespace api_filmes_senai.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Produces("Application/json")]
+    [Produces("application/json")]
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioRepository _usuarioRepository;
@@ -22,9 +20,11 @@ namespace api_filmes_senai.Controllers
         }
 
         /// <summary>
-        /// Endpoint para Cadastrar o Usuario
+        /// Endpoint para cadastrar usuário
         /// </summary>
-        [Authorize]
+        /// <param name="usuario">Usuário a ser cadastrado</param>
+        /// <returns>Status code 201</returns>
+        // [Authorize]
         [HttpPost]
         public IActionResult Post(Usuario usuario)
         {
@@ -41,21 +41,27 @@ namespace api_filmes_senai.Controllers
         }
 
         /// <summary>
-        /// Endpoint para Buscar Usuario por Id
+        /// Endpoint para buscar um usuário por id
         /// </summary>
-        [HttpGet("BuscarPorId/{id}")]
+        /// <param name="id">Id do usuário a ser buscado</param>
+        /// <returns>Usuário buscado</returns>
+        [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
             try
             {
                 Usuario usuarioBuscado = _usuarioRepository.BuscarPorId(id);
-                return Ok(usuarioBuscado);
-            }
-            catch (Exception error)
-            {
-                return BadRequest(error.Message);
-            }
 
+                if (usuarioBuscado != null)
+                {
+                    return Ok(usuarioBuscado);
+                }
+                return null!;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

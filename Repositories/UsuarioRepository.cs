@@ -1,30 +1,33 @@
 ﻿using api_filmes_senai.Context;
-using api_filmes_senai.Domains.StringLenght;
+using api_filmes_senai.Domains;
 using api_filmes_senai.Interfaces;
 using api_filmes_senai.Utils;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api_filmes_senai.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
+
         private readonly Filmes_Context _context;
 
         public UsuarioRepository(Filmes_Context context)
         {
             _context = context;
         }
-
+         
         public Usuario BuscarPorEmailESenha(string email, string senha)
         {
             try
             {
-                Usuario usuarioBuscado = _context.Usuario.FirstOrDefault(u => u.Email == email)!;
+                Usuario usuarioBuscado = _context.Usuarios.FirstOrDefault(u => u.Email == email)!;
 
                 if (usuarioBuscado != null)
                 {
-                    bool confere = Criptografia.CompararHash(senha, usuarioBuscado.Senha!);
+                   bool confere = Criptografia.CompararHash(senha, usuarioBuscado.Senha!);
 
-                    if(confere)
+                    if (confere)
                     {
                         return usuarioBuscado;
                     }
@@ -33,17 +36,15 @@ namespace api_filmes_senai.Repositories
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
         public Usuario BuscarPorId(Guid id)
         {
-
             try
             {
-                Usuario usuarioBuscado = _context.Usuario.Find(id)!;
+                Usuario usuarioBuscado = _context.Usuarios.Find(id)!; 
 
                 if (usuarioBuscado != null)
                 {
@@ -63,12 +64,13 @@ namespace api_filmes_senai.Repositories
             {
                 novoUsuario.Senha = Criptografia.GerarHash(novoUsuario.Senha!);
 
-                _context.Usuario.Add(novoUsuario);
+                _context.Usuarios.Add(novoUsuario);
 
                 _context.SaveChanges();
             }
             catch (Exception)
             {
+
                 throw;
             }
         }

@@ -1,4 +1,6 @@
-﻿namespace api_filmes_senai.Utils
+﻿using api_filmes_senai.Utils;
+
+namespace api_filmes_senai.Utils
 {
     public static class Criptografia
     {
@@ -7,9 +9,12 @@
             return BCrypt.Net.BCrypt.HashPassword(senha);
         }
 
-        public static bool CompararHash(string senhaInformada, string senhaBD)
+        public static bool CompararHash(string senhaInformada, string senhaBanco)
         {
-            return BCrypt.Net.BCrypt.Verify(senhaInformada, senhaBD);
+            return BCrypt.Net.BCrypt.Verify(senhaInformada, senhaBanco);
         }
+        
     }
 }
+
+

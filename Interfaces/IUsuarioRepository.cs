@@ -1,4 +1,4 @@
-﻿using api_filmes_senai.Domains.StringLenght;
+﻿using api_filmes_senai.Domains;
 
 namespace api_filmes_senai.Interfaces
 {
